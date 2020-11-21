@@ -15,7 +15,7 @@ class RegisterBody extends StatefulWidget {
 class _RegisterBodyState extends State<RegisterBody> {
   String username = '';
   String password = '';
-  String c_password = '';
+  String cPassword = '';
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _RegisterBodyState extends State<RegisterBody> {
             RoundedInput(
               child: TextField(
                 onChanged: (value) {
-                  c_password = value;
+                  cPassword = value;
                 },
                 obscureText: true,
                 decoration: InputDecoration(
