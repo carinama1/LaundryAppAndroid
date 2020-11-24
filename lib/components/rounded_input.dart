@@ -13,7 +13,9 @@ class RoundedInput extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 18),
       decoration: BoxDecoration(
-          color: kPrimaryLightColor, borderRadius: BorderRadius.circular(30)),
+        color: kPrimaryLightColor,
+        borderRadius: BorderRadius.circular(30),
+      ),
       child: child,
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:laundryapp/Screens/Home/home_screen.dart';
 import 'package:laundryapp/Screens/Login/components/login_background.dart';
+import 'package:laundryapp/Screens/Register/register_screen.dart';
 import 'package:laundryapp/components/rounded_button.dart';
 import 'package:laundryapp/components/rounded_input.dart';
 import 'package:laundryapp/constants.dart';
@@ -60,17 +62,31 @@ class _LoginBodyState extends State<LoginBody> {
             ),
             RoundedButton(
               color: kPrimaryColor,
-              onPress: () {},
+              onPress: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return HomeScreen();
+                }));
+              },
               textColor: Colors.white,
               text: "LOGIN",
             ),
             SizedBox(height: size.height * .03),
-            Text(
-              "Don't have an Account ? Sign Up",
-              style: TextStyle(
-                  fontSize: 12,
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
+                  return RegisterScreen();
+                }));
+              },
+              child: Text(
+                "Don't have an Account ? Sign Up",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),

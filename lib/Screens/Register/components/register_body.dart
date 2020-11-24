@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:laundryapp/Screens/Login/login_screen.dart';
 import 'package:laundryapp/Screens/Register/components/register_background.dart';
 import 'package:laundryapp/components/rounded_button.dart';
 import 'package:laundryapp/components/rounded_input.dart';
@@ -79,12 +80,20 @@ class _RegisterBodyState extends State<RegisterBody> {
               text: "REGISTER",
             ),
             SizedBox(height: size.height * .03),
-            Text(
-              "Allready have an Account ? Sign In",
-              style: TextStyle(
-                  fontSize: 12,
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }));
+              },
+              child: Text(
+                "Allready have an Account ? Sign In",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),
