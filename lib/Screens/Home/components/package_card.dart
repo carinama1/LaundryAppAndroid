@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:laundryapp/Screens/Home/components/order_screen.dart';
 import 'package:laundryapp/constants.dart';
 
 class PackageCard extends StatelessWidget {
   final String title;
   final String subTitle;
+  final int orderType;
   final String day;
+  final String halo;
   final int price;
   final List<Color> bgColor;
   final String asset;
+  final Function handleClick;
 
   const PackageCard({
     Key key,
@@ -17,47 +21,63 @@ class PackageCard extends StatelessWidget {
     this.price,
     this.bgColor,
     this.asset,
+    this.handleClick,
+    this.orderType,
+    this.halo,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return AspectRatio(
-        aspectRatio: 1.8,
-        child: Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.center,
-          children: <Widget>[
-            FractionallySizedBox(
-              widthFactor: .94,
-              heightFactor: .94,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                        colors: bgColor),
-                  ),
-                  child: InnerCard(
-                    size: size,
-                    title: title,
-                    subTitle: subTitle,
-                    day: day,
-                    price: price,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return OrderScreen(
+            title: title,
+            price: price,
+            asset: asset,
+            color: bgColor[0],
+            orderType: orderType,
+          );
+        }));
+      },
+      child: AspectRatio(
+          aspectRatio: 1.8,
+          child: Stack(
+            fit: StackFit.expand,
+            alignment: Alignment.center,
+            children: <Widget>[
+              FractionallySizedBox(
+                widthFactor: .94,
+                heightFactor: .94,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomLeft,
+                          colors: bgColor),
+                    ),
+                    child: InnerCard(
+                      size: size,
+                      title: title,
+                      subTitle: subTitle,
+                      day: day,
+                      price: price,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              top: -0,
-              right: -14,
-              child: Image.asset(asset, width: size.width * .38),
-            ),
-          ],
-        ));
+              Positioned(
+                top: -0,
+                right: -14,
+                child: Image.asset(asset, width: size.width * .38),
+              ),
+            ],
+          )),
+    );
   }
 }
 

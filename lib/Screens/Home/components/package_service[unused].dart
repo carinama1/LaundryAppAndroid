@@ -10,6 +10,7 @@ class RegularPackage extends StatelessWidget {
       title: "Regular Service",
       subTitle: "Nice service",
       price: 12500,
+      halo: "asd",
       day: "2-3 Hari",
       bgColor: [Colors.blue, Colors.blue[200]],
       asset: "assets/images/shipping-package-colour-nobg.png",

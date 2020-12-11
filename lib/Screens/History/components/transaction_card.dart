@@ -1,62 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:laundryapp/Screens/History/components/transaction_detail.dart';
 import 'package:laundryapp/constants.dart';
+import 'package:laundryapp/misc.dart';
 
 const List<String> assets = ['assets/icons/coming-soon.png'];
 
 class TransactionCard extends StatelessWidget {
   final bool status;
+  final dynamic item;
   const TransactionCard({
     Key key,
     this.status,
+    this.item,
   }) : super(key: key);
+  final id = 'LDR-0000928';
 
   @override
   Widget build(BuildContext context) {
+    print(item);
     final Size size = MediaQuery.of(context).size;
-    return Container(
-        width: size.width,
-        height: size.height * .12,
-        decoration: BoxDecoration(
-            color: status ? kPrimaryMediumColor : Colors.white,
-            borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-                child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                    height: size.height * .12,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Transaction #transaction_id",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: status ? Colors.white : Colors.black)),
-                        Opacity(
-                          opacity: .6,
-                          child: Text("Using name,phone number or email",
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return TransactionDetail(id: id);
+        }));
+      },
+      child: Container(
+          width: size.width,
+          height: size.height * .12,
+          decoration: BoxDecoration(
+              color: status ? kPrimaryMediumColor : Colors.white,
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                      height: size.height * .12,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Transaction ${item["orderID"]}",
                               style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                   color: status ? Colors.white : Colors.black)),
-                        )
-                      ],
-                    ))),
-            StatusWidget(
-              size: size,
-              status: status,
-            )
-          ],
-        ));
+                          Opacity(
+                            opacity: .6,
+                            child: Text("Using name,phone number or email",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color:
+                                        status ? Colors.white : Colors.black)),
+                          )
+                        ],
+                      ))),
+              StatusWidget(
+                size: size,
+                status: status,
+                statusLabel: item["status"]["label"],
+              )
+            ],
+          )),
+    );
   }
 }
 
 class StatusWidget extends StatelessWidget {
+  final String statusLabel;
   const StatusWidget({
     Key key,
     @required this.size,
     this.status,
+    this.statusLabel,
   }) : super(key: key);
 
   final Size size;
@@ -64,17 +82,22 @@ class StatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return status ? Done(size: size) : NotDone(size: size);
+    return status
+        ? Done(
+            size: size,
+            status: statusLabel,
+          )
+        : NotDone(
+            size: size,
+            status: statusLabel,
+          );
   }
 }
 
 class Done extends StatelessWidget {
-  const Done({
-    Key key,
-    @required this.size,
-  }) : super(key: key);
-
+  final String status;
   final Size size;
+  const Done({Key key, this.size, this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +113,7 @@ class Done extends StatelessWidget {
         height: size.height * .12,
         width: size.width * .26,
         child: Text(
-          "Service Done",
+          status.capitalizeFirstofEach,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
@@ -99,12 +122,13 @@ class Done extends StatelessWidget {
 }
 
 class NotDone extends StatelessWidget {
+  final String status;
+  final Size size;
   const NotDone({
     Key key,
     @required this.size,
+    this.status,
   }) : super(key: key);
-
-  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +162,7 @@ class NotDone extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.only(right: 10, bottom: 10),
                     child: Text(
-                      "Processed",
+                      status.capitalizeFirstofEach,
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
